@@ -7,9 +7,9 @@ Management needs a reporting and analytics dashboard to track the current status
 ---
 
 ## Dataset
-- Healthcare data - Patient waitlist
-    - Inpatient data: A patient who stays in a hospital while under treatment
-    - Outpatient: A patient who receive medical treatment without being admitted to a hospital
+* Healthcare data - Patient waitlist
+    * Inpatient data: A patient who stays in a hospital while under treatment
+    * Outpatient: A patient who receive medical treatment without being admitted to a hospital  
 
 - [Inpatient Data](data/Inpatient/)
 - [Outpatient Data](data/Outpatient/)
