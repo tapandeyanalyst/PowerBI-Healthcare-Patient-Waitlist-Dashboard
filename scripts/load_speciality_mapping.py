@@ -58,23 +58,23 @@ df.columns = (
 # Truncate Bronze Table
 # -------------------------------------------------------------------
 cursor = conn.cursor()
-cursor.execute("TRUNCATE TABLE bronze.specialty_mapping")
+cursor.execute("TRUNCATE TABLE bronze.speciality_mapping")
 conn.commit()
-print("✅ bronze.specialty_mapping truncated successfully.")
+print("✅ bronze.speciality_mapping truncated successfully.")
 
 # -------------------------------------------------------------------
 # Load Data into SQL Server
 # -------------------------------------------------------------------
 try:
     df.to_sql(
-        name="specialty_mapping",
+        name="speciality_mapping",
         schema="bronze",
         con=engine,
         if_exists="append",
         index=False
     )
 
-    print(f"✅ Successfully loaded {len(df)} rows into bronze.specialty_mapping.")
+    print(f"✅ Successfully loaded {len(df)} rows into bronze.speciality_mapping.")
 
 except Exception as e:
     print("❌ Error loading data into SQL Server.")
