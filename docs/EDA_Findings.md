@@ -149,3 +149,9 @@ The Silver and Gold layers are refreshed through the master stored procedure:
 
 ```sql
 dbo.sp_load
+<<<<<<< HEAD
+=======
+
+```
+## PowerBI Dashboard Screenshot
+>>>>>>> 7126ffc (Update Files)
