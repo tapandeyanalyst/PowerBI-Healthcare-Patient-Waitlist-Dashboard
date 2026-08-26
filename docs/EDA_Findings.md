@@ -118,6 +118,7 @@ Refer : [Dataset Overview Query](../sql/eda_analysis/Phase_1_Dataset_Overview.sq
 * Refer : [Relationship Analysis Script](../sql/eda_analysis/Phase_4_Relationship_Analysis.sql)
 
 ## Phase 5  : Silver Layer Recommendations
+
 The EDA findings were used to define the transformation rules implemented in the Silver Layer.
 
 ### Transformation Summary
@@ -149,9 +150,3 @@ The Silver and Gold layers are refreshed through the master stored procedure:
 
 ```sql
 dbo.sp_load
-<<<<<<< HEAD
-=======
-
-```
-## PowerBI Dashboard Screenshot
->>>>>>> 7126ffc (Update Files)
