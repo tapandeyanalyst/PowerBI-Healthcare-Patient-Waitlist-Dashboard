@@ -229,7 +229,7 @@ dbo.sp_load
 ## PowerBI Dashboard Screenshot
 
 * Summary Page
-![Summary Page](../screenshot/dashbaord_page1.png)
+![Summary Page](screenshot/dashbaord_page1.png)
 
 * Detail Page
-![Summary Page](../screenshot/dashbaord_page2.png)
+![Summary Page](screenshot/dashbaord_page2.png)
