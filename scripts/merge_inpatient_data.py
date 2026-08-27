@@ -1,36 +1,41 @@
 import pandas as pd
 from pathlib import Path
 
-# Input folder
-input_folder = Path(r"E:\Power BI\Health Care Dashboard\Health-Care\data\Inpatient")
+def merge_inpatient():
+    # Input folder
+    input_folder = Path(r"E:\Power BI\Health Care Dashboard\Health-Care\data\Inpatient")
 
-# Output folder
-output_folder = Path(r"E:\Power BI\Health Care Dashboard\Health-Care\data\merged_data")
+    # Output folder
+    output_folder = Path(r"E:\Power BI\Health Care Dashboard\Health-Care\data\merged_data")
 
-# Get all CSV files
-csv_files = sorted(input_folder.glob("*.csv"))
 
-# Store each DataFrame
-dataframes = []
+    # Get all CSV files
+    csv_files = sorted(input_folder.glob("*.csv"))
 
-for file in csv_files:
-    print(f"Reading: {file.name}")
+    # Store each DataFrame
+    dataframes = []
 
-    df = pd.read_csv(file)
+    for file in csv_files:
+        print(f"Reading: {file.name}")
 
-    # Remove any Unnamed columns
-    df = df.loc[:, ~df.columns.str.startswith("Unnamed")]
+        df = pd.read_csv(file)
 
-    dataframes.append(df)
+        # Remove any Unnamed columns
+        df = df.loc[:, ~df.columns.str.startswith("Unnamed")]
 
-# Merge all files
-inpatient_data = pd.concat(dataframes, ignore_index=True)
+        dataframes.append(df)
 
-# Save merged file
-output_file = Path(output_folder) / "inpatient_data.csv"
-inpatient_data.to_csv(output_file, index=False)
+    # Merge all files
+    inpatient_data = pd.concat(dataframes, ignore_index=True)
 
-print("\nMerge completed successfully.")
-print(f"Rows   : {len(inpatient_data)}")
-print(f"Columns: {len(inpatient_data.columns)}")
-print(f"Saved  : {output_file}")
+    # Save merged file
+    output_file = Path(output_folder) / "inpatient_data.csv"
+    inpatient_data.to_csv(output_file, index=False)
+
+    print("\nMerge completed successfully.")
+    print(f"Rows   : {len(inpatient_data)}")
+    print(f"Columns: {len(inpatient_data.columns)}")
+    print(f"Saved  : {output_file}")
+
+if __name__ == "__main__":
+    merge_inpatient()

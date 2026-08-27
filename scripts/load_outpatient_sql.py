@@ -1,78 +1,83 @@
-# Note: use this command to run the query in VS Code: python -m scripts.load_outpatient_sql 
+# Note: use this command to run the script in VS Code: python -m scripts.load_speciality_mapping
 import pandas as pd
 from sqlalchemy import create_engine
 from pathlib import Path
 import pyodbc
 from config import SERVER, DATABASE, DRIVER, MERGED_DATA_DIR
 
-# -------------------------------------------------------------------
-# Database Connection
-# -------------------------------------------------------------------
+def load_outpatient():
+    # -------------------------------------------------------------------
+    # Database Connection
+    # -------------------------------------------------------------------
 
-connection_string = (
-    f"DRIVER={DRIVER};"
-    f"SERVER={SERVER};"
-    f"DATABASE={DATABASE};"
-    "Trusted_Connection=yes;"
-    "TrustServerCertificate=yes;"
-)
-
-try:
-    # Test Connection
-    conn = pyodbc.connect(connection_string)
-    print("✅ Connection to SQL Server successful!")
-    
-     # SQLAlchemy Engine
-    engine = create_engine(
-        f"mssql+pyodbc:///?odbc_connect={connection_string}"
+    connection_string = (
+        f"DRIVER={DRIVER};"
+        f"SERVER={SERVER};"
+        f"DATABASE={DATABASE};"
+        "Trusted_Connection=yes;"
+        "TrustServerCertificate=yes;"
     )
 
-except Exception as e:
-    print("❌ Connection failed!")
-    print(e)
+    try:
+        # Test Connection
+        conn = pyodbc.connect(connection_string)
+        print("✅ Connection to SQL Server successful!")
 
-file_path = MERGED_DATA_DIR / "outpatient_data.csv"
-df = pd.read_csv(file_path)
+        # SQLAlchemy Engine
+        engine = create_engine(
+            f"mssql+pyodbc:///?odbc_connect={connection_string}"
+        )
 
-#print(df.head())
-#print(f"\nNumber of Rows   : {len(df)}")
-#print(f"Number of Columns: {len(df.columns)}")
+    except Exception as e:
+        print("❌ Connection failed!")
+        print(e)
 
-# -------------------------------------------------------------------
-# Convert Archive_Date to Date
-# -------------------------------------------------------------------
+    file_path = MERGED_DATA_DIR / "outpatient_data.csv"
+    df = pd.read_csv(file_path)
 
-df["Archive_Date"] = pd.to_datetime(
-    df["Archive_Date"],
-    format="%d-%m-%Y"
-)
-#print(df.info())
+    #print(df.head())
+    #print(f"\nNumber of Rows   : {len(df)}")
+    #print(f"Number of Columns: {len(df.columns)}")
 
+    # -------------------------------------------------------------------
+    # Convert Archive_Date to Date
+    # -------------------------------------------------------------------
 
-# -------------------------------------------------------------------
-# Truncate Bronze Table
-# -------------------------------------------------------------------
-cursor = conn.cursor()
-cursor.execute("TRUNCATE TABLE bronze.outpatientdata")
-conn.commit()
-print("✅ bronze.outpatientdata truncated successfully.")
-
-# -------------------------------------------------------------------
-# Load Data into SQL Server
-# -------------------------------------------------------------------
-try:
-    df.to_sql(
-        name="outpatientdata",
-        schema="bronze",
-        con=engine,
-        if_exists="append",
-        index=False
+    df["Archive_Date"] = pd.to_datetime(
+        df["Archive_Date"],
+        format="%d-%m-%Y"
     )
+    #print(df.info())
 
-    print(f"✅ Successfully loaded {len(df)} rows into bronze.outpatientdata.")
 
-except Exception as e:
-    print("❌ Error loading data into SQL Server.")
-    print(e)
+    # -------------------------------------------------------------------
+    # Truncate Bronze Table
+    # -------------------------------------------------------------------
+    cursor = conn.cursor()
+    cursor.execute("TRUNCATE TABLE bronze.outpatientdata")
+    conn.commit()
+    print("✅ bronze.outpatientdata truncated successfully.")
+
+    # -------------------------------------------------------------------
+    # Load Data into SQL Server
+    # -------------------------------------------------------------------
+    try:
+        df.to_sql(
+            name="outpatientdata",
+            schema="bronze",
+            con=engine,
+            if_exists="append",
+            index=False
+        )
+
+        print(f"✅ Successfully loaded {len(df)} rows into bronze.outpatientdata.")
+
+    except Exception as e:
+        print("❌ Error loading data into SQL Server.")
+        print(e)
+        raise
 
     conn.close()
+
+if __name__ == "__main__":
+    load_outpatient()
