@@ -137,7 +137,7 @@ Create the `HealthCareDB` database with the following schemas:
 Create the following Bronze tables:
 
 * `bronze.inpatientdata`
-* `bronze.outpatientdata`
+* `bronze.outpatientdata`:wq
 * `bronze.speciality_mapping`
 
 Load the source data into the Bronze Layer using Python:
@@ -206,9 +206,7 @@ Design architecture is important because it provides a clear blueprint of the en
 
 * [High Level Architecture](docs/High-Level-Architecture.png)
 * [Data Flow Architecture](docs/Data%20Architecture-Layers.png)
-* Data Flow Diagram
-* Integration Model (Silver Layer)
-* Data Mart (Star Schema)
+* [Data Flow Diagram](docs/Dashboard-Data%20Flow%20Diagram.png)
 
 ## Step 7: Ingestion Pipeline
 
